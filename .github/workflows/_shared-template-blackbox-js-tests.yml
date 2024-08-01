@@ -17,7 +17,6 @@ on:
 jobs:
   blackbox-test:
     name: Blackbox Test
-    needs: env
     runs-on: ubuntu-latest
     defaults:
       run:
