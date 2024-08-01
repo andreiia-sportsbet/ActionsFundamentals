@@ -18,9 +18,6 @@ jobs:
   blackbox-test:
     name: Blackbox Test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ inputs.service_directory }}
     env:
       ENV: ${{ inputs.env }}
       ENVIRONMENT: ${{ inputs.env }}
