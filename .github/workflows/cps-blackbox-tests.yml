@@ -22,7 +22,7 @@ on:
         type: string
 
 jobs:
-  blackbox-test:
+  run-blackbox-test:
     name: ${{ inputs.service_directory }} Blackbox Tests
     uses: ./.github/workflows/_shared-template-blackbox-js-tests.yml
     with:
