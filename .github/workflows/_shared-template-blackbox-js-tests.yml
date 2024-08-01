@@ -18,8 +18,7 @@ jobs:
   blackbox-test:
     name: Blackbox Test
     needs: env
-    runs-on: cst-${{ inputs.env == 'tst' && 'dev' || inputs.env }}-general-x64-master
-    container: 673803718775.dkr.ecr.ap-southeast-2.amazonaws.com/github-container-job/default:latest
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{ inputs.service_directory }}
