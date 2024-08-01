@@ -1,0 +1,30 @@
+name: CPS Blackbox Tests - Run Script 🧪
+run-name: Blackbox Tests ${{ inputs.env }} - ${{ inputs.service_directory }}
+
+on:
+  push:
+    branches:
+      - feature/TRUST-4739_create_workflow_cps_blackbox
+  workflow_dispatch:
+    inputs:
+      env:
+        required: true
+        description: Environment to test
+        default: dev
+        type: choice
+        options:
+          - dev
+          - tst
+          - stg
+      service_directory:
+        description: The path of the service that contains blackbox tests ie. acs will be `javascript/apps/acs`
+        required: true
+        type: string
+
+jobs:
+  blackbox-test:
+    name: ${{ inputs.service_directory }} Blackbox Tests
+    uses: ./.github/workflows/_shared-template-blackbox-js-tests.yml
+    with:
+      env: ${{ inputs.env }}
+      service_directory: ${{ inputs.service_directory }}

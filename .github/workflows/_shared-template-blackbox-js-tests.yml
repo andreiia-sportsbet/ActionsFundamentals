@@ -1,0 +1,42 @@
+name: _shared-template-blackbox-js-tests
+# Shared Github workflow for js blackbox testing
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        description: Environment to test
+        required: true
+        default: tst
+        type: string
+      service_directory:
+        description: The path of the service that contains blackbox tests in the mono repo
+        required: true
+        type: string
+
+jobs:
+  blackbox-test:
+    name: Blackbox Test
+    needs: env
+    runs-on: cst-${{ inputs.env == 'tst' && 'dev' || inputs.env }}-general-x64-master
+    container: 673803718775.dkr.ecr.ap-southeast-2.amazonaws.com/github-container-job/default:latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.service_directory }}
+    env:
+      ENV: ${{ inputs.env }}
+      ENVIRONMENT: ${{ inputs.env }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Running Tests
+        run: make deployment-blackbox-tests
+
+      - name: Upload Test Report
+        if: success() || failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: /__w/cst-services/cst-services/${{ inputs.service_directory }}/blackbox-tests/test-report/index.html
