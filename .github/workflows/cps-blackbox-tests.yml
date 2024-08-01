@@ -4,7 +4,7 @@ run-name: Blackbox Tests ${{ inputs.env }} - ${{ inputs.service_directory }}
 on:
   push:
     branches:
-      - feature/TRUST-4739_create_workflow_cps_blackbox
+      - main
   workflow_dispatch:
     inputs:
       env:
